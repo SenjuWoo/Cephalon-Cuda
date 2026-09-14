@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Cephalon Cuda">
+  <rect width="64" height="64" rx="14" fill="#03080a"/>
+  <path fill="#0e1d22" stroke="#65f4e8" stroke-width="2" stroke-linejoin="round" d="M32 8 50 18v20L32 56 14 38V18z"/>
+  <path fill="none" stroke="#65f4e8" stroke-width="1.6" opacity=".55" d="M32 14 44 21v14L32 50 20 35V21z"/>
+  <rect x="22" y="30" width="20" height="4.2" rx="2.1" fill="#65f4e8"/>
+  <circle cx="32" cy="22" r="2.1" fill="#65f4e8"/>
+</svg>

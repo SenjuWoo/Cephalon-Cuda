@@ -14,7 +14,7 @@
 <p align="center">
   <a href="https://github.com/SenjuWoo/Cephalon-Cuda/actions/workflows/ci.yml"><img src="https://github.com/SenjuWoo/Cephalon-Cuda/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-65f4e8?labelColor=03080a" alt="MIT License"></a>
-  <a href="https://github.com/SenjuWoo/Cephalon-Cuda/releases/tag/v2.2.0"><img src="https://img.shields.io/badge/release-v2.2.0-47cbff?labelColor=03080a" alt="v2.2.0"></a>
+  <a href="https://github.com/SenjuWoo/Cephalon-Cuda/releases/latest"><img src="https://img.shields.io/github/v/release/SenjuWoo/Cephalon-Cuda?label=release&color=47cbff" alt="latest release"></a>
 </p>
 
 <p align="center">

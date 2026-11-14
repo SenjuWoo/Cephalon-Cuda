@@ -110,7 +110,8 @@ public sealed class ScreenCaptureService : IDisposable
                 var pixels = new byte[local.Width * local.Height * 4];
                 for (int y = 0; y < local.Height; y++)
                 {
-                    var src = mapped.DataPointer + (local.Y + y) * mapped.RowPitch + local.X * 4;
+                    // Vortice 3.8 exposes RowPitch as uint; keep the offset arithmetic in nint.
+                    var src = mapped.DataPointer + (nint)((long)(local.Y + y) * mapped.RowPitch + local.X * 4);
                     Marshal.Copy(src, pixels, y * local.Width * 4, local.Width * 4);
                 }
                 return new CapturedFrame(pixels, local.Width, local.Height);
@@ -140,11 +141,11 @@ public sealed class ScreenCaptureService : IDisposable
         using (factory)
         {
             var center = new Point(region.X + region.Width / 2, region.Y + region.Height / 2);
-            for (int a = 0; factory.EnumAdapters1(a, out IDXGIAdapter1? adapter).Success; a++)
+            for (uint a = 0; factory.EnumAdapters1(a, out IDXGIAdapter1? adapter).Success; a++)
             {
                 using (adapter)
                 {
-                    for (int o = 0; adapter!.EnumOutputs(o, out IDXGIOutput? output).Success; o++)
+                    for (uint o = 0; adapter!.EnumOutputs(o, out IDXGIOutput? output).Success; o++)
                     {
                         using (output)
                         {

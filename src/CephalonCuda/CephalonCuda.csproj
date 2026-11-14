@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
     <UseWPF>true</UseWPF>
@@ -22,7 +22,8 @@
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
     <!-- WFAC010: DPI awareness intentionally lives in app.manifest (PerMonitorV2) for the WPF overlay. -->
-    <NoWarn>$(NoWarn);WFAC010</NoWarn>
+    <!-- WFAC010 / WFO0003 (its .NET 10 name): WinForms wants DPI mode in code, but this is a WPF app and WPF reads DPI awareness from app.manifest. -->
+    <NoWarn>$(NoWarn);WFAC010;WFO0003</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -34,9 +35,9 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.15" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4078.44" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4314.35" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="11.0.0" />
-    <PackageReference Include="Vortice.Direct3D11" Version="3.5.0" />
+    <PackageReference Include="Vortice.Direct3D11" Version="3.8.3" />
   </ItemGroup>
 
   <ItemGroup>

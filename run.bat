@@ -15,5 +15,5 @@ if %ERRORLEVEL% NEQ 0 (
 )
 
 echo Launching ...
-start "" "src\CephalonCuda\bin\Debug\net8.0-windows10.0.19041.0\CephalonCuda.exe"
+start "" "src\CephalonCuda\bin\Debug\net10.0-windows10.0.19041.0\CephalonCuda.exe"
 endlocal

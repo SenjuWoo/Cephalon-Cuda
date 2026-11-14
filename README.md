@@ -84,7 +84,7 @@ Not claimed:
 
 ## Build the verified release
 
-On 64-bit Windows 10 or 11 with the .NET 8 SDK:
+On 64-bit Windows 10 or 11 with the .NET 10 SDK:
 
 ```bat
 BUILD_V2.2.bat

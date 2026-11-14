@@ -1,3 +1,13 @@
+# Unreleased
+
+## .NET 10
+
+- Retargeted to .NET 10 LTS; .NET 8 support ended on 2026-11-10. Releases stay self-contained, so nothing new is installed by users.
+- Vortice.Direct3D11 3.8.3 (screen capture uses its unsigned row pitch and adapter/output indexes) and WebView2 1.0.4314.35. Microsoft.Data.Sqlite 10.0.15 and ProtectedData 11.0.0 were merged earlier; ProtectedData 11 is supported only on .NET 10.
+- The OpenRouter stream reader ends on `ReadLineAsync` returning null instead of polling `EndOfStream` (CA2024).
+- WFO0003 joins WFAC010 in `NoWarn`: WPF takes DPI awareness from `app.manifest`.
+- Verified: warnings-as-errors build, self-contained publish, and a launch that shows the main window.
+
 # Cephalon Cuda 2.2
 
 ## R3.1 runtime XAML hotfix

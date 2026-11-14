@@ -1,10 +1,10 @@
 # Cephalon Cuda — dev notes
 
-.NET 8 WPF Warframe companion (see README.md for features/architecture). Externals-only data policy:
+.NET 10 WPF Warframe companion (see README.md for features/architecture). Externals-only data policy:
 never add memory reading, injection, or input automation — EE.log tail, DXGI+OCR, and public APIs only.
 
 ## Build & verify
-- Build: `dotnet build CephalonCuda.sln -c Release -p:TreatWarningsAsErrors=true` (SDK 8+)
+- Build: `dotnet build CephalonCuda.sln -c Release -p:TreatWarningsAsErrors=true` (SDK 10+)
 - Final delivery: `BUILD_V2.2.bat` → restore, warnings-as-errors compile, self-contained publish, UI smoke, live-data verification, and two-folder packaging.
 - Ship-only shortcut: `publish.bat /nopause` → single self-contained `.\publish\CephalonCuda.exe` (win-x64, single-file, advisor.html is an EmbeddedResource extracted at runtime — don't turn it back into Content or single-file sharing breaks). The script smoke-tests the published exe and fails non-zero if it can't boot.
 - UI smoke: run exe with `--smoke` → instantiates every view + overlay, exit 0 = pass

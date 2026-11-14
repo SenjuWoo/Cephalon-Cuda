@@ -6,7 +6,7 @@ cd /d "%~dp0"
 
 where dotnet >NUL 2>NUL
 if errorlevel 1 (
-  echo ERROR: The .NET 8 SDK is required. Run BUILD_V2.2.bat for automatic setup.
+  echo ERROR: The .NET 10 SDK is required. Run BUILD_V2.2.bat for automatic setup.
   if /I not "%~1"=="/nopause" pause
   exit /b 1
 )

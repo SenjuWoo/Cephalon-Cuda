@@ -5,7 +5,7 @@ The ultimate Overwolf-free Warframe companion — safe, clean, and strictly exte
 [center][color=#00ff9c][b]ZERO MEMORY READING · ZERO HOOKS · ZERO INJECTION[/b][/color][/center]
 
 [heading]Description[/heading]
-Cephalon Cuda is a native Windows app ([b].NET 8 WPF[/b]) built as a serious alternative to Overwolf-heavy companions like AlecaFrame — without the bloat, without the storefront, and without touching the game process.
+Cephalon Cuda is a native Windows app ([b].NET 10 WPF[/b]) built as a serious alternative to Overwolf-heavy companions like AlecaFrame — without the bloat, without the storefront, and without touching the game process.
 
 It watches Warframe [b]from the outside only[/b]:
 [list]

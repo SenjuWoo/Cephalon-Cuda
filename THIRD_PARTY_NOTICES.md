@@ -2,7 +2,7 @@
 
 Cephalon Cuda uses or integrates with:
 
-- Microsoft .NET 8 and WPF
+- Microsoft .NET 10 and WPF
 - Microsoft.Data.Sqlite
 - Microsoft Edge WebView2
 - System.Security.Cryptography.ProtectedData

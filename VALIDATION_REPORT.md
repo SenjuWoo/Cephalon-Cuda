@@ -1,5 +1,12 @@
 # Cephalon Cuda 2.2 validation report
 
+## 2.2.1 release gate
+
+- `tools/validate_release.py` on a clean checkout: 0 failures (17 XAML files, 170 event bindings, 47 C# files, fresh v8 schema plus V1.8 and V2.1 migrations, 56 theme tokens across eight presets). New contracts cover the startup-page render, expiry-based fissure and cycle countdowns, and the .NET 10+ SDK gate in `tools/Make-Release.ps1`.
+- `BUILD_V2.2.bat` (`tools/Make-Release.ps1`) ran end to end on the tagged source: warnings-as-errors build, self-contained single-file publish, `--smoke`, `--verify-data` with every live source OK, then the Nexus and Source archives with `SHA256SUMS.txt`.
+- The published exe reports file version 2.2.1.0.
+
+
 ## Major UI Architecture R3
 
 The source passes the complete packaged offline validation gate with zero failures.

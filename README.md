@@ -71,15 +71,15 @@ activity manually, edit goals, and control automatic briefings.
 
 | Workspace | What it does |
 |---|---|
-| Tenno Path | Roadmap, Next Steps, Navigator, Shop Guardian, Redeem & Claim, Goal Stack, Just Got Back? |
+| Tenno Path | Roadmap, Next Steps, Navigator (with a check-before-you-destroy disposition check and a build translator), Shop Guardian, Redeem & Claim, Goal Stack, Just Got Back? |
 | Live Overview | Fissures, cycles, sortie, archon hunt, alerts, invasions, Baro, news |
 | AI Advisor | Streaming OpenRouter chat grounded in the local database (optional key) |
-| Inventory | Owned items and riven disposition checks |
+| Inventory | Ownership, quantities, live Platinum and Ducat value, what is safe to sell or keep |
 | Relic Planner | Expected-value ranking, refinements, active fissures, OCR reward scan |
 | Market & Trading | v2 orders, statistics, ledger, listing sync |
 | Mastery Helper | Mastery catalog and progress |
 | Foundry | Build timers and ready claims |
-| Riven Assistant | Riven weapons and live auctions |
+| Riven Assistant | Rolls, disposition, demand, trade potential and live auctions |
 | Live Data & Intel | Source health, licensed JSON feeds, database search |
 | Overlay & OCR | HUD overlay, capture and OCR settings |
 | Settings | Themes, UI scale, startup page, keys, automation |
@@ -96,9 +96,7 @@ confirm. API keys are encrypted with Windows DPAPI. See [`PRIVACY_AND_DATA.md`](
 flowchart LR
   LOG["EE.log (read-only tail)"] --> APP
   CAP["DXGI capture + OCR (on request)"] --> APP
-  API["Public sources: WFCD items, official drop tables,
-  warframestat world state, warframe.market"] -->|"atomic refresh,
-  last good copy kept"| DB[("local SQLite + FTS")]
+  API["Public sources: WFCD items, official drop tables,<br/>warframestat world state, warframe.market"] -->|"atomic refresh, last good copy kept"| DB[("local SQLite + FTS")]
   DB --> APP["workspaces, overlay, Shop Guardian"]
   DB --> AI["AI Advisor (optional OpenRouter key)"]
   YOU["your goals, inventory, trades"] --> DB
@@ -106,7 +104,8 @@ flowchart LR
 
 - **Externals only.** `EE.log` tail, screen capture with OCR, and public APIs. No memory reading, injection or input automation, ever.
 - **Source-stamped intel.** Every third-party fact keeps its source and freshness; community tiers and builds stay opinions, imported from licensed JSON feeds rather than scraped.
-- **Fail closed.** A failed or malformed refresh never replaces the last healthy cache, and the schema only ever migrates forward.
+- **Fail closed.** Each source refreshes automatically on its own freshness window; a failed or malformed refresh never replaces the last healthy cache, and the schema only ever migrates forward.
+- **Evidence-aware build synthesis.** Build questions combine item stats, licensed or imported community builds, acquisition routes, market context and your goals.
 
 ### Honest status
 

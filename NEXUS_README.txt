@@ -1,9 +1,9 @@
-CEPHALON CUDA 2.2 - RETURN PROTOCOL
+CEPHALON CUDA 2.2.1 - RETURN PROTOCOL
 
 INSTALL
 1. Extract CephalonCuda.exe anywhere outside Program Files.
 2. Run CephalonCuda.exe.
-3. Complete the short first-run setup.
+3. Tenno Path opens on Next Steps; add your own goals in Goal Stack.
 4. Add an OpenRouter key only if you want AI Advisor features.
 
 THE APP AUTOMATICALLY FETCHES

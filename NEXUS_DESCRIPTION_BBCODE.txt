@@ -25,7 +25,7 @@ Designed for maximum portability.
 [list]
 [*]Download and extract [code]Cephalon_Cuda_2.2_Nexus_Release.zip[/code].[/*]
 [*]Run [code]CephalonCuda.exe[/code] from any folder [b]outside Program Files[/b].[/*]
-[*]Complete the short first-run setup.[/*]
+[*]Tenno Path opens on Next Steps; add your own goals in Goal Stack.[/*]
 [*](Optional) Open [b]Settings[/b] and paste an [b]OpenRouter[/b] API key if you want the AI Advisor. The key is stored with Windows DPAPI encryption.[/*]
 [*]For overlay / capture features, run Warframe in [b]Borderless[/b] or [b]Windowed[/b] mode (exclusive fullscreen blocks them).[/*]
 [*]On first launch the app downloads and caches item catalog, official drops, market, relic, Mastery, and world-state data into a local SQLite database under [code]%LocalAppData%\CephalonCuda[/code].[/*]

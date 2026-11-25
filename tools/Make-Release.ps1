@@ -14,9 +14,12 @@ $Publish = Join-Path $Root 'publish'
 $Dist = if ($DeliveryRoot) { [IO.Path]::GetFullPath($DeliveryRoot) } else { Join-Path $Root 'dist' }
 $Public = Join-Path $Dist 'Cephalon Cuda 2.2 - Nexus Release'
 $Source = Join-Path $Dist 'Cephalon Cuda 2.2 - Source'
-$CombinedZip = Join-Path $Dist 'Cephalon_Cuda_2.2_Final_Delivery.zip'
-$PublicZip = Join-Path $Dist 'Cephalon_Cuda_2.2_Nexus_Release.zip'
-$SourceZip = Join-Path $Dist 'Cephalon_Cuda_2.2_Source.zip'
+# Archive names carry the full project version so a patch release never reuses a published name.
+$Version = ([xml](Get-Content -Raw $Project)).Project.PropertyGroup.Version | Where-Object { $_ } | Select-Object -First 1
+if (-not $Version) { throw 'Could not read <Version> from CephalonCuda.csproj.' }
+$CombinedZip = Join-Path $Dist "Cephalon_Cuda_${Version}_Final_Delivery.zip"
+$PublicZip = Join-Path $Dist "Cephalon_Cuda_${Version}_Nexus_Release.zip"
+$SourceZip = Join-Path $Dist "Cephalon_Cuda_${Version}_Source.zip"
 
 function Write-Step([string]$Text) {
     Write-Host "`n== $Text ==" -ForegroundColor Cyan
@@ -26,30 +29,31 @@ function Assert-LastExit([string]$Action) {
     if ($LASTEXITCODE -ne 0) { throw "$Action failed with exit code $LASTEXITCODE." }
 }
 
-function Get-DotNet8 {
+# The project targets net10.0-windows: any installed .NET 10 or newer SDK can build it.
+function Get-DotNetSdk {
     $cmd = Get-Command dotnet -ErrorAction SilentlyContinue
     if (-not $cmd) { return $false }
     $sdks = & dotnet --list-sdks
-    return [bool]($sdks | Where-Object { $_ -match '^8\.' })
+    return [bool]($sdks | Where-Object { $_ -match '^(\d+)\.' -and [int]$Matches[1] -ge 10 })
 }
 
-Write-Step 'Checking Windows and .NET 8 SDK'
+Write-Step 'Checking Windows and .NET 10+ SDK'
 if ($PSVersionTable.PSEdition -eq 'Core' -and -not $IsWindows) {
     throw 'This WPF release pipeline must run on 64-bit Windows 10 or Windows 11.'
 }
 
-if (-not (Get-DotNet8)) {
+if (-not (Get-DotNetSdk)) {
     if (-not $InstallSdk) {
-        throw 'The .NET 8 SDK is missing. Re-run MAKE_FINAL_RELEASE.bat or install Microsoft.DotNet.SDK.8.'
+        throw 'No .NET 10 or newer SDK found. Re-run MAKE_FINAL_RELEASE.bat or install Microsoft.DotNet.SDK.10.'
     }
     $winget = Get-Command winget -ErrorAction SilentlyContinue
     if (-not $winget) {
-        throw 'The .NET 8 SDK is missing and winget is unavailable. Install the official .NET 8 SDK, then retry.'
+        throw 'No .NET 10 or newer SDK found and winget is unavailable. Install the official .NET 10 SDK, then retry.'
     }
-    & winget install --id Microsoft.DotNet.SDK.8 --exact --accept-source-agreements --accept-package-agreements
+    & winget install --id Microsoft.DotNet.SDK.10 --exact --accept-source-agreements --accept-package-agreements
     Assert-LastExit 'SDK installation'
     $env:PATH = [Environment]::GetEnvironmentVariable('PATH', 'Machine') + ';' + [Environment]::GetEnvironmentVariable('PATH', 'User')
-    if (-not (Get-DotNet8)) { throw 'A .NET 8 SDK was not detected after installation.' }
+    if (-not (Get-DotNetSdk)) { throw 'A .NET 10 or newer SDK was not detected after installation.' }
 }
 
 Write-Step 'Cleaning prior build output'

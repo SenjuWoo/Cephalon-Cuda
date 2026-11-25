@@ -14,9 +14,9 @@
     <AssemblyName>CephalonCuda</AssemblyName>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Assets\cuda.ico</ApplicationIcon>
-    <Version>2.2.0</Version>
-    <AssemblyVersion>2.2.0.0</AssemblyVersion>
-    <FileVersion>2.2.0.0</FileVersion>
+    <Version>2.2.1</Version>
+    <AssemblyVersion>2.2.1.0</AssemblyVersion>
+    <FileVersion>2.2.1.0</FileVersion>
     <Product>Cephalon Cuda</Product>
     <Description>Warframe return-player and onboarding companion with automatic official drop intelligence, evidence-aware build synthesis, Platinum guardrails, live data, OCR, and source-stamped AI retrieval.</Description>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>

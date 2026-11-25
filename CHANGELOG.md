@@ -1,4 +1,11 @@
-# Unreleased
+# Cephalon Cuda 2.2.1
+
+## Fixes
+
+- The default start page (Tenno Path) opened blank on every launch: its nav button is checked in XAML, so the `Checked` event fired before the workspace existed and the startup navigation raised nothing. It now renders on first paint.
+- Live Overview: fissure ETAs always read `?` and the Vallis and Duviri cycles showed `( left)`, because the world-state payload sends `eta` and those `timeLeft` values as null. Fissures, alerts and all five open-world cycles now count down from their expiry timestamps, cycles tick every second, and fissures already past expiry are hidden even when the api snapshot lags.
+- `BUILD_V2.2.bat` / `tools/Make-Release.ps1` required (and offered to install) the .NET 8 SDK, which cannot build the .NET 10 project. It now accepts any .NET 10 or newer SDK and installs `Microsoft.DotNet.SDK.10` when asked. Release archives are named from the project version.
+- Microsoft.Data.Sqlite 11.0.0. Verified on the self-contained single-file publish: `--smoke` passes and `--verify-data` reports 0 failures.
 
 ## .NET 10
 

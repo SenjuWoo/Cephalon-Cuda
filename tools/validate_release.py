@@ -330,6 +330,10 @@ def check_feature_contracts() -> None:
         "legacy price fallback warning": (market, 'Legacy bulk pricing is unavailable; using cached prices and v2 item metadata.'),
         "optional legacy verification": ((PROJECT / "App.xaml.cs").read_text(encoding="utf-8"), 'CheckOptional("item statistics'),
         "live orders survive chart failure": ((PROJECT / "Views" / "MarketView.xaml.cs").read_text(encoding="utf-8"), 'Historical chart unavailable; live v2 orders are still current.'),
+        "startup page renders when its nav button is already checked": ((PROJECT / "Views" / "MainWindow.xaml.cs").read_text(encoding="utf-8"), 'if (rb.IsChecked == true) OnNavChecked(rb, new RoutedEventArgs());'),
+        "fissure countdown from expiry": ((PROJECT / "Views" / "DashboardView.xaml.cs").read_text(encoding="utf-8"), 'f.TimeLeft))'),
+        "world cycle countdown from expiry": ((PROJECT / "Models" / "WorldStateModels.cs").read_text(encoding="utf-8"), 'public string Remaining => Expiry is not null'),
+        "release pipeline accepts the .NET 10+ SDK": (release_ps1, 'function Get-DotNetSdk'),
     }
     for label, (text, token) in required_tokens.items():
         if token not in text:
@@ -397,8 +401,8 @@ def check_project_metadata() -> None:
     project = (PROJECT / "CephalonCuda.csproj").read_text(encoding="utf-8")
     for token in ["<UseWPF>true</UseWPF>", "<EnableWindowsTargeting>true</EnableWindowsTargeting>", "<Nullable>enable</Nullable>"]:
         if token not in project: fail(f"Project metadata missing {token}")
-    if not re.search(r"<Version>2\.2\.0</Version>", project):
-        fail("Project version is not 2.2.0")
+    if not re.search(r"<Version>2\.2\.1</Version>", project):
+        fail("Project version is not 2.2.1")
     notes.append("Project metadata checked")
 
 

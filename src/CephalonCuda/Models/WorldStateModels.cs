@@ -36,6 +36,12 @@ public sealed class Fissure
     public bool IsStorm { get; set; }
     public bool IsHard { get; set; }
     public bool Expired { get; set; }
+
+    /// <summary>Live countdown from the expiry timestamp; the /pc payload sends eta as null.</summary>
+    public string TimeLeft => Services.TimeUtil.Countdown(Expiry);
+
+    /// <summary>Not flagged expired and not past its expiry; the api snapshot can lag real time by minutes.</summary>
+    public bool IsActive => !Expired && !(Services.TimeUtil.Parse(Expiry) is { } end && end <= DateTimeOffset.UtcNow);
 }
 
 public sealed class Sortie
@@ -135,6 +141,10 @@ public sealed class Alert
 {
     public AlertMission? Mission { get; set; }
     public string? Eta { get; set; }
+    public string? Expiry { get; set; }
+
+    /// <summary>Countdown from expiry when the payload has one (eta is null on /pc), else the eta text.</summary>
+    public string TimeLeft => Expiry is not null ? Services.TimeUtil.Countdown(Expiry) : Eta ?? "—";
 }
 
 public sealed class AlertMission
@@ -148,8 +158,16 @@ public sealed class WorldCycle
 {
     public string? State { get; set; }
     public string? TimeLeft { get; set; }
+    public string? Expiry { get; set; }
     public bool IsDay { get; set; }
     public bool IsWarm { get; set; }
+
+    /// <summary>
+    /// Live countdown from expiry. The payload's timeLeft is a snapshot taken when the api cached it,
+    /// and it is null for the Vallis and Duviri cycles.
+    /// </summary>
+    public string Remaining => Expiry is not null ? Services.TimeUtil.Countdown(Expiry)
+        : string.IsNullOrEmpty(TimeLeft) ? "—" : TimeLeft;
 }
 
 public sealed class NewsItem

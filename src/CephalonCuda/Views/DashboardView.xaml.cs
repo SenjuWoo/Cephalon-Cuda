@@ -55,19 +55,12 @@ public partial class DashboardView : UserControl
         RenderFissures(ws);
         RenderTimers(ws);
 
-        CyclesText.Text =
-            $"Cetus   {Fmt(ws.CetusCycle)}\n" +
-            $"Vallis  {Fmt(ws.VallisCycle)}\n" +
-            $"Deimos  {Fmt(ws.CambionCycle)}\n" +
-            $"Duviri  {Fmt(ws.DuviriCycle)}\n" +
-            $"Earth   {Fmt(ws.EarthCycle)}";
-
         ArbitrationText.Text = ws.Arbitration is { Node.Length: > 0 } arb
             ? $"Arbitration: {arb.Type} @ {arb.Node} ({arb.Enemy})"
             : "Arbitration: —";
         AlertsText.Text = ws.Alerts.Count > 0
             ? string.Join("\n", ws.Alerts.Take(5).Select(al =>
-                $"Alert: {al.Mission?.Type} @ {al.Mission?.Node} → {al.Mission?.Reward?.AsString} ({al.Eta})"))
+                $"Alert: {al.Mission?.Type} @ {al.Mission?.Node} → {al.Mission?.Reward?.AsString} ({al.TimeLeft})"))
             : "Alerts: none";
 
         InvasionList.ItemsSource = ws.Invasions.Where(i => !i.Completed).Take(8)
@@ -87,6 +80,13 @@ public partial class DashboardView : UserControl
     /// <summary>Just the countdown-bearing panels; called every second so timers tick without a refetch.</summary>
     private void RenderTimers(WorldState ws)
     {
+        CyclesText.Text =
+            $"Cetus   {Fmt(ws.CetusCycle)}\n" +
+            $"Vallis  {Fmt(ws.VallisCycle)}\n" +
+            $"Deimos  {Fmt(ws.CambionCycle)}\n" +
+            $"Duviri  {Fmt(ws.DuviriCycle)}\n" +
+            $"Earth   {Fmt(ws.EarthCycle)}";
+
         SortieText.Text = ws.Sortie is { } s
             ? $"{s.Boss} ({s.Faction}) — ends in {s.TimeLeft}\n" + string.Join("\n",
                 s.Variants.Select((v, i) => $"  {i + 1}. {v.MissionType} @ {v.Node} — {v.Modifier}"))
@@ -109,7 +109,7 @@ public partial class DashboardView : UserControl
 
     private void RenderFissures(WorldState ws)
     {
-        var fissures = ws.Fissures.Where(f => !f.Expired);
+        var fissures = ws.Fissures.Where(f => f.IsActive);
         if (SteelPathOnly.IsChecked == true) fissures = fissures.Where(f => f.IsHard);
         if (StormsOnly.IsChecked == true) fissures = fissures.Where(f => f.IsStorm);
 
@@ -118,10 +118,10 @@ public partial class DashboardView : UserControl
             .Select(f => new FissureRow(
                 f.Tier ?? "?", f.MissionType ?? "?", f.Node ?? "?", f.Enemy ?? "?",
                 f.IsStorm ? "Storm" : f.IsHard ? "SP" : "Normal",
-                f.Eta ?? "?"))
+                f.TimeLeft))
             .ToList();
     }
 
     private static string Fmt(WorldCycle? c) =>
-        c is null ? "—" : $"{c.State?.ToUpperInvariant(),-6} ({c.TimeLeft} left)";
+        c is null ? "—" : $"{c.State?.ToUpperInvariant(),-6} ({(c.Remaining == "expired" ? "changing now" : c.Remaining + " left")})";
 }

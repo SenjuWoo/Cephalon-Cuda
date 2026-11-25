@@ -68,8 +68,8 @@ public partial class RelicPlannerView : UserControl
 
         var ws = App.Services.WorldState.Current;
         var fissures = ws?.Fissures
-            .Where(f => !f.Expired && string.Equals(f.Tier, relic.Tier, StringComparison.OrdinalIgnoreCase))
-            .Select(f => $"{f.MissionType} @ {f.Node} — {(f.IsStorm ? "Storm · " : "")}{(f.IsHard ? "SP · " : "")}{f.Eta}")
+            .Where(f => f.IsActive && string.Equals(f.Tier, relic.Tier, StringComparison.OrdinalIgnoreCase))
+            .Select(f => $"{f.MissionType} @ {f.Node} — {(f.IsStorm ? "Storm · " : "")}{(f.IsHard ? "SP · " : "")}{f.TimeLeft} left")
             .ToList();
         FissureList.ItemsSource = fissures is { Count: > 0 }
             ? fissures
@@ -194,8 +194,8 @@ public partial class RelicPlannerView : UserControl
             .ToList();
         var ws = s.WorldState.Current;
         var activeFissures = ws?.Fissures
-            .Where(f => !f.Expired)
-            .Select(f => $"{f.Tier} {f.MissionType} @ {f.Node}{(f.IsHard ? " SP" : "")}{(f.IsStorm ? " Storm" : "")} ({f.Eta})")
+            .Where(f => f.IsActive)
+            .Select(f => $"{f.Tier} {f.MissionType} @ {f.Node}{(f.IsHard ? " SP" : "")}{(f.IsStorm ? " Storm" : "")} ({f.TimeLeft} left)")
             .ToList() ?? [];
 
         var messages = new List<ChatMsg>

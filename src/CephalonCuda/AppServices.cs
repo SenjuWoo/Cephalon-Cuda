@@ -79,7 +79,7 @@ public sealed class AppServices : IDisposable
             ConnectTimeout = TimeSpan.FromSeconds(15),
             MaxConnectionsPerServer = 8,
         });
-        Http.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("CephalonCuda", "2.2.0"));
+        Http.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("CephalonCuda", "2.2.1"));
         Http.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         Http.Timeout = TimeSpan.FromSeconds(45);
 

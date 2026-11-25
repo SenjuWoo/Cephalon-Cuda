@@ -67,10 +67,10 @@ public sealed class WorldStateService : IDisposable
         if (s is null) return null;
         return new
         {
-            fissures = s.Fissures.Where(f => !f.Expired).GroupBy(f => f.Tier)
+            fissures = s.Fissures.Where(f => f.IsActive).GroupBy(f => f.Tier)
                 .ToDictionary(g => g.Key ?? "?", g => g.Count()),
-            steelPathFissures = s.Fissures.Count(f => f.IsHard && !f.Expired),
-            voidStorms = s.Fissures.Count(f => f.IsStorm && !f.Expired),
+            steelPathFissures = s.Fissures.Count(f => f.IsHard && f.IsActive),
+            voidStorms = s.Fissures.Count(f => f.IsStorm && f.IsActive),
             sortie = s.Sortie is null ? null : $"{s.Sortie.Boss} ({s.Sortie.Faction}), ends in {s.Sortie.TimeLeft}",
             archonHunt = s.ArchonHunt is null ? null : $"{s.ArchonHunt.Boss}, ends in {s.ArchonHunt.TimeLeft}",
             baro = s.VoidTrader?.StatusLine,
@@ -88,7 +88,7 @@ public sealed class WorldStateService : IDisposable
                 node = a.Mission?.Node,
                 type = a.Mission?.Type,
                 reward = a.Mission?.Reward?.AsString ?? a.Mission?.Reward?.ItemString,
-                a.Eta,
+                Eta = a.TimeLeft,
             }),
             nightwave = s.Nightwave is null ? null : new
             {

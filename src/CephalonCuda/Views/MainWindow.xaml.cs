@@ -178,7 +178,14 @@ public partial class MainWindow : Window
     public void NavigateTo(string tag)
     {
         foreach (var child in NavPanel.Children)
-            if (child is RadioButton { Tag: string t } rb && t == tag) { rb.IsChecked = true; return; }
+            if (child is RadioButton { Tag: string t } rb && t == tag)
+            {
+                // The default page's button is IsChecked in XAML, so its Checked event fired before
+                // ContentHost existed; setting IsChecked again raises nothing and the workspace stayed blank.
+                if (rb.IsChecked == true) OnNavChecked(rb, new RoutedEventArgs());
+                else rb.IsChecked = true;
+                return;
+            }
     }
 
     private static UserControl CreateView(string tag) => tag switch
